@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import requests
 import os
 import subprocess
+
+import requests
 
 GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 PUBLISH_TOKEN = os.environ["PUBLISH_TOKEN"]
@@ -14,8 +15,8 @@ VERSION = os.environ['GITHUB_SHA']
 # CONFIGURATION PARAMETERS
 # Forks should change these to publish to their own infrastructure.
 #
-ROBUST_CDN_URL = "https://cdn.deltav.gay/"
-FORK_ID = "delta-v"
+ROBUST_CDN_URL = os.environ["ROBUST_CDN_URL"]
+FORK_ID = os.environ["FORK_ID"]
 
 def main():
     print("Fetching artifact URL from API...")
