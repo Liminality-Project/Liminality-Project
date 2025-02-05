@@ -9,7 +9,7 @@ Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://githu
 ## Links
 
 #### Liminality Project
-<!-- [Website](https://delta-v.org/) | [Wiki](https://wiki.delta-v.org/view/Main_Page) | --> [Discord](https://discord.gg/`qdrWcR2v)
+[Discord](https://discord.gg/KHX2aqa8sQ)
 
 #### Space Station 14
 
