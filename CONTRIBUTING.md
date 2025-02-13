@@ -1,4 +1,4 @@
-# Delta-V Contributing Guidelines
+# Liminality-Project Contributing Guidelines
 
 Generally we follow [upstream's PR guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html) for code quality and such.
 
@@ -7,18 +7,18 @@ Importantly do not make webedits, copied verbatim from above:
 
 Upstream is the [space-wizards/space-station-14](https://github.com/space-wizards/space-station-14) repository that wizden runs on.
 
-# Content specific to Delta-V
+# Content specific to Liminality-Project
 
-In general anything you create from scratch (not modifying something that exists from upstream) should go in a DeltaV subfolder, `_DV`.
+In general anything you create from scratch (not modifying something that exists from upstream) should go in a Liminality subfolder, `_LIM`.
 
 Examples:
-- `Content.Server/_DV/Chapel/SacrificialAltarSystem.cs`
-- `Resources/Prototypes/_DV/ai_factions.yml`
-- `Resources/Audio/_DV/Items/gavel.ogg`
-- `Resources/Textures/_DV/Icons/cri.rsi`
-- `Resources/Locale/en-US/_DV/shipyard/shipyard-console.ftl`
-- `Resources/ServerInfo/Guidebook/_DV/AlertProcedure.xml`
-  Note that guidebooks go in `ServerInfo/Guidebook/_DV` and not `ServerInfo/_DV`!
+- `Content.Server/_LIM/Chapel/SacrificialAltarSystem.cs`
+- `Resources/Prototypes/_LIM/ai_factions.yml`
+- `Resources/Audio/_LIM/Items/gavel.ogg`
+- `Resources/Textures/_LIM/Icons/cri.rsi`
+- `Resources/Locale/en-US/_LIM/shipyard/shipyard-console.ftl`
+- `Resources/ServerInfo/Guidebook/_LIM/AlertProcedure.xml`
+  Note that guidebooks go in `ServerInfo/Guidebook/_LIM` and not `ServerInfo/_LIM`!
 
 # Changes to upstream files
 
@@ -41,7 +41,7 @@ A single line comment on a changed yml field:
 - type: entity
   parent: BasePDA
   id: SciencePDA
-  name: epistemics PDA # DeltaV - Epistemics Department replacing Science
+  name: epistemics PDA # Liminality - Epistemics Department replacing Science
 ```
 
 A pair of comments enclosing a list of added items to starting gear:
@@ -49,15 +49,15 @@ A pair of comments enclosing a list of added items to starting gear:
   storage:
     back:
     - EmergencyRollerBedSpawnFolded
-    # Begin DeltaV additions
+    # Begin Liminality additions
     - BodyBagFolded
     - Portafib
-    # End DeltaV additions
+    # End Liminality additions
 ```
 
 A comment on a new imported namespace:
 ```cs
-using Content.Server.Psionics.Glimmer; // DeltaV
+using Content.Server.Psionics.Glimmer; // Liminality
 ```
 
 A pair of comments enclosing a block of added code:
@@ -68,10 +68,10 @@ private EntityUid Slice(...)
 
     _transform.SetLocalRotation(sliceUid, 0);
 
-    // DeltaV - start of deep frier stuff
+    // Liminality - start of deep frier stuff
     var slicedEv = new FoodSlicedEvent(user, uid, sliceUid);
     RaiseLocalEvent(uid, ref slicedEv);
-    // DeltaV - end of deep frier stuff
+    // Liminality - end of deep frier stuff
 
     ...
 }
@@ -87,14 +87,14 @@ Conflicts with maps make PRs mutually exclusive so either your work on the maint
 
 Double-check your diff on GitHub before submitting: look for unintended commits or changes and remove accidental whitespace or line-ending changes.
 
-Additionally for long-lasting PRs, if you see `RobustToolbox` in the changed files you have to revert it, use `git checkout upstream/master RobustToolbox` (replacing `upstream` with the name of your DeltaV-Station/Delta-V remote)
+Additionally for long-lasting PRs, if you see `RobustToolbox` in the changed files you have to revert it, use `git checkout upstream/master RobustToolbox` (replacing `upstream` with the name of your Liminality-Project/Liminality-Project remote)
 
 # Changelogs
 
-By default any changelogs goes in the DeltaV changelog, you can use the DeltaV admin changelog by putting `DELTAVADMIN:` in a line after `:cl:`.
+By default any changelogs goes in the Liminality changelog, you can use the Liminality-Project admin changelog by putting `LIMINALITYADMIN:` in a line after `:cl:`.
 
 Do not use `ADMIN:` as **it will mangle** the upstream admin changelog!
 
 # Additional resources
 
-If you are new to contributing to SS14 in general, have a look at the [SS14 docs](https://docs.spacestation14.io/) or ask for help in `#contribution-help` on [Discord](https://discord.gg/deltav)!
+If you are new to contributing to SS14 in general, have a look at the [SS14 docs](https://docs.spacestation14.io/) or ask for help in `#contribution-help` on [Discord](https://discord.gg/KHX2aqa8sQ)!
