@@ -1,0 +1,48 @@
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+  
+env:
+  DOTNET_NOLOGO: true
+
+jobs:
+  setup:
+    name: Setup Development Environment
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3.6.0
+      with:
+        submodules: 'recursive'
+
+    - name: Setup Submodules
+      run: |
+        git submodule update --init --recursive
+
+    - name: Pull Engine Updates
+      uses: space-wizards/submodule-dependency@v0.1.5
+
+    - name: Update Engine Submodules
+      run: |
+        cd RobustToolbox/
+        git submodule update --init --recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3.2.0
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Verify Build
+      run: dotnet build --configuration Debug --no-restore
+
+    - name: Setup Complete
+      run: |
+        echo "✅ Development environment setup complete!"
+        echo "🔧 .NET version: $(dotnet --version)"
+        echo "📦 Dependencies restored"
+        echo "🏗️ Build verification passed"
