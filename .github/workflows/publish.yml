@@ -24,13 +24,31 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-publish-${{ hashFiles('**/*.csproj', '**/*.fsproj', '**/*.vbproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-publish-
+          ${{ runner.os }}-nuget-
+
     - name: Get Engine Tag
       run: |
         cd RobustToolbox
         git fetch --depth=1
 
+    - name: Pre-download NuGet packages (before firewall)
+      run: |
+        echo "Pre-downloading NuGet packages for publish workflow..."
+        export DOTNET_CLI_TELEMETRY_OPTOUT=1
+        export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+        dotnet restore --no-cache --verbosity minimal
+
     - name: Install dependencies
-      run: dotnet restore
+      run: |
+        export DOTNET_CLI_TELEMETRY_OPTOUT=1
+        dotnet restore --verbosity minimal
 
     - name: Build Packaging
       run: dotnet build Content.Packaging --configuration Release --no-restore /m

@@ -27,8 +27,27 @@ jobs:
         uses: actions/setup-dotnet@v3.2.0
         with:
           dotnet-version: 9.0.x
+      
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-yaml-${{ hashFiles('**/*.csproj', '**/*.fsproj', '**/*.vbproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-yaml-
+            ${{ runner.os }}-nuget-
+
+      - name: Pre-download NuGet packages (before firewall)
+        run: |
+          echo "Pre-downloading NuGet packages for YAML linter workflow..."
+          export DOTNET_CLI_TELEMETRY_OPTOUT=1
+          export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+          dotnet restore --no-cache --verbosity minimal
+
       - name: Install dependencies
-        run: dotnet restore
+        run: |
+          export DOTNET_CLI_TELEMETRY_OPTOUT=1
+          dotnet restore --verbosity minimal
       - name: Build
         run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Run Linter
