@@ -23,8 +23,26 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-docfx-${{ hashFiles('**/*.csproj', '**/*.fsproj', '**/*.vbproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-docfx-
+          ${{ runner.os }}-nuget-
+
+    - name: Pre-download NuGet packages (before firewall)
+      run: |
+        echo "Pre-downloading NuGet packages for docfx workflow..."
+        export DOTNET_CLI_TELEMETRY_OPTOUT=1
+        export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+        dotnet restore --no-cache --verbosity minimal
+
     - name: Install dependencies
-      run: dotnet restore
+      run: |
+        export DOTNET_CLI_TELEMETRY_OPTOUT=1
+        dotnet restore --verbosity minimal
 
     - name: Build Project
       run: dotnet build --no-restore /p:WarningsAsErrors=nullable
